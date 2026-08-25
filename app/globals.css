@@ -1,26 +1,192 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --bg-main: #fff9f5;
+  --bg-soft: #fcedeb;
+  --bg-card: #fffdfb;
+
+  --text-primary: #1b1718;
+  --text-secondary: #62595a;
+
+  --pink-primary: #e9758b;
+  --pink-light: #f6b6c2;
+  --pink-pale: #fbe0e4;
+  --rose-deep: #b94f67;
+
+  --gold: #b78a55;
+  --gold-soft: #d9b98b;
+
+  --border-light: #eeddd9;
+  --dark: #0b0a0a;
+
+  --radius-small: 10px;
+  --radius-card: 14px;
+  --radius-large: 20px;
+
+  --background: var(--bg-main);
+  --foreground: var(--text-primary);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --color-bg-main: var(--bg-main);
+  --color-bg-soft: var(--bg-soft);
+  --color-bg-card: var(--bg-card);
+
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+
+  --color-pink-primary: var(--pink-primary);
+  --color-pink-light: var(--pink-light);
+  --color-pink-pale: var(--pink-pale);
+  --color-rose-deep: var(--rose-deep);
+
+  --color-gold: var(--gold);
+  --color-gold-soft: var(--gold-soft);
+  --color-border-light: var(--border-light);
+  --color-dark: var(--dark);
+
+  /* legacy aliases used in existing components */
+  --color-ivory: var(--bg-main);
+  --color-blush: var(--bg-soft);
+  --color-porcelain: var(--bg-card);
+  --color-charcoal: var(--text-primary);
+  --color-warm-charcoal: var(--text-secondary);
+  --color-shiki-pink: var(--pink-primary);
+  --color-sakura: var(--pink-light);
+  --color-blossom: var(--pink-pale);
+  --color-deep-rose: var(--rose-deep);
+  --color-champagne: var(--gold);
+  --color-gold-border: var(--gold-soft);
+
+  --font-sans: var(--font-montserrat), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-cormorant), ui-serif, Georgia, serif;
+  --font-accent: var(--font-allura), cursive;
+
+  --radius-sm: var(--radius-small);
+  --radius-md: var(--radius-card);
+  --radius-lg: var(--radius-large);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg-main);
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-serif);
+}
+
+::selection {
+  background: var(--pink-pale);
+  color: var(--text-primary);
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--pink-primary);
+  outline-offset: 3px;
+}
+
+@keyframes gallery-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.gallery-marquee {
+  animation: gallery-marquee 45s linear infinite;
+}
+
+.group\/marquee:hover .gallery-marquee {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-marquee {
+    animation: none;
+  }
+}
+
+/* Soft page transitions & hovers */
+.hover-fade-img {
+  transition: transform 0.7s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.4s ease;
+}
+
+.group:hover .hover-fade-img {
+  transform: scale(1.04);
+}
+
+.btn-soft {
+  transition:
+    background-color 0.3s ease,
+    color 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.3s ease;
+}
+
+.btn-soft:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(233, 117, 139, 0.22);
+}
+
+.btn-ghost-soft {
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.btn-ghost-soft:hover {
+  transform: translateY(-2px);
+}
+
+.card-soft {
+  transition:
+    transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+    box-shadow 0.4s ease,
+    border-color 0.3s ease;
+}
+
+.card-soft:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(27, 23, 24, 0.08);
+}
+
+.link-fade {
+  transition: opacity 0.25s ease, color 0.25s ease;
+}
+
+.link-fade:hover {
+  opacity: 0.75;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hover-fade-img,
+  .btn-soft,
+  .btn-ghost-soft,
+  .card-soft,
+  .link-fade {
+    transition: none;
+  }
+
+  .group:hover .hover-fade-img,
+  .btn-soft:hover,
+  .btn-ghost-soft:hover,
+  .card-soft:hover {
+    transform: none;
+    box-shadow: none;
+  }
 }
