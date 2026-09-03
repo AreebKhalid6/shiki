@@ -143,7 +143,7 @@ export default function Hero() {
               Reserve Table
             </Link>
             <Link
-              href="#menu"
+              href="/menu"
               className="btn-ghost-soft inline-flex w-full items-center justify-center border border-white px-6 py-3.5 font-sans text-[12px] font-semibold uppercase tracking-[0.1em] text-white hover:bg-white/10 sm:w-auto"
             >
               View Menu

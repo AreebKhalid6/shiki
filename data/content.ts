@@ -14,16 +14,17 @@ export const restaurant = {
     { days: "Fri – Sat", time: "11:30am – 11:00pm" },
     { days: "Sunday", time: "11:30am – 9:30pm" },
   ],
+  menuUrl: "https://shiki.toast.site/menu/shiki-4900-dodge-street",
 };
 
 export const navLinks = [
-  { label: "About", href: "#about" },
-  { label: "Menu", href: "#menu" },
-  { label: "Spaces", href: "#spaces" },
-  { label: "Private Events", href: "#private-events" },
-  { label: "Gallery", href: "#gallery" },
-  { label: "Gifts", href: "#gifts" },
-  { label: "Contact", href: "#contact" },
+  { label: "About", href: "/about" },
+  { label: "Menu", href: "/menu" },
+  { label: "Spaces", href: "/#spaces" },
+  { label: "Private Events", href: "/#private-events" },
+  { label: "Gallery", href: "/#gallery" },
+  { label: "Gifts", href: "/#gifts" },
+  { label: "Contact", href: "/contact" },
 ] as const;
 
 export const experienceItems = [

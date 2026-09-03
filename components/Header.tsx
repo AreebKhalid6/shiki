@@ -6,7 +6,13 @@ import { Menu, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { navLinks } from "@/data/content";
 
-export default function Header() {
+type HeaderProps = {
+  theme?: "dark" | "light";
+  className?: string;
+};
+
+export default function Header({ theme = "dark", className = "" }: HeaderProps) {
+  const isLight = theme === "light";
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -17,11 +23,17 @@ export default function Header() {
   }, [open]);
 
   return (
-    <header className="absolute inset-x-0 top-0 z-30">
+    <header
+      className={
+        isLight
+          ? `sticky top-0 z-30 border-b border-border-light bg-bg-main/95 backdrop-blur-sm ${className}`
+          : `absolute inset-x-0 top-0 z-30 ${className}`
+      }
+    >
       <div className="relative mx-auto flex h-16 max-w-[1380px] items-center justify-between px-4 sm:h-[76px] sm:px-8 lg:h-[84px] lg:px-10">
         <Link href="/" className="relative z-40 shrink-0" aria-label="Shiki home">
           <Image
-            src="/images/whitelogo.png"
+            src={isLight ? "/images/shiki-logo-dark.png" : "/images/whitelogo.png"}
             alt="Shiki"
             width={220}
             height={73}
@@ -38,10 +50,16 @@ export default function Header() {
             <Link
               key={item.href}
               href={item.href}
-              className="group relative whitespace-nowrap font-sans text-[10px] font-medium uppercase tracking-[0.22em] text-white/95 transition-opacity hover:opacity-100 xl:text-[11px]"
+              className={`group relative whitespace-nowrap font-sans text-[10px] font-medium uppercase tracking-[0.22em] transition-opacity hover:opacity-100 xl:text-[11px] ${
+                isLight ? "text-text-primary/90" : "text-white/95"
+              }`}
             >
               {item.label}
-              <span className="absolute -bottom-1 left-0 h-px w-0 bg-white transition-all duration-300 group-hover:w-full" />
+              <span
+                className={`absolute -bottom-1 left-0 h-px w-0 transition-all duration-300 group-hover:w-full ${
+                  isLight ? "bg-pink-primary" : "bg-white"
+                }`}
+              />
             </Link>
           ))}
         </nav>
@@ -56,7 +74,9 @@ export default function Header() {
 
           <button
             type="button"
-            className="inline-flex size-10 items-center justify-center text-white min-[900px]:hidden"
+            className={`inline-flex size-10 items-center justify-center min-[900px]:hidden ${
+              isLight ? "text-text-primary" : "text-white"
+            }`}
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-label={open ? "Close menu" : "Open menu"}

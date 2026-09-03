@@ -63,7 +63,7 @@ function ChefCopy() {
         Chef Tom
       </p>
       <Link
-        href="#about"
+        href="/about"
         className="mt-4 inline-flex items-center gap-2 border-b border-gold/70 pb-1 font-sans text-[11px] font-semibold uppercase tracking-[0.12em] text-gold transition-colors hover:border-gold hover:text-gold-soft sm:mt-5 sm:text-[12px]"
       >
         Learn More About Our Chef
