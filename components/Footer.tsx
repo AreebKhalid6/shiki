@@ -114,7 +114,7 @@ export default function Footer() {
                   key={row.days}
                   className="flex flex-col gap-0.5 sm:flex-row sm:flex-wrap sm:gap-x-3 sm:gap-y-1"
                 >
-                  <span className="min-w-[5.5rem] font-semibold">{row.days}</span>
+                  <span className="min-w-[6.5rem] font-semibold">{row.days}</span>
                   <span>{row.time}</span>
                 </li>
               ))}

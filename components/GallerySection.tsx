@@ -11,7 +11,7 @@ export default function GallerySection() {
   return (
     <section
       id="gallery"
-      className="overflow-hidden bg-bg-main px-4 py-14 sm:px-8 sm:py-24 lg:px-10 lg:py-28"
+      className="overflow-hidden bg-bg-main px-4 pb-14 pt-20 sm:px-8 sm:pb-24 lg:px-10 lg:pb-28"
     >
       <div className="mx-auto max-w-[1280px] xl:max-w-[1380px]">
         <Reveal className="mx-auto max-w-2xl text-center">

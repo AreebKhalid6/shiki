@@ -42,7 +42,7 @@ export default function GiftCardSection() {
 
             <Reveal delay={0.08} className="mt-6">
               <div className="card-soft rounded-[14px] border border-[#f0d7d4] bg-[#fffdfb]/94 p-5 sm:p-6">
-                <div className="grid gap-6 sm:grid-cols-2">
+                <div className="grid gap-10 sm:grid-cols-2 sm:gap-x-14 sm:gap-y-10">
                   <div>
                     <h3 className="flex items-center gap-2 font-sans text-[12px] font-bold uppercase tracking-[0.16em] text-gold">
                       <Clock size={14} aria-hidden />
@@ -50,9 +50,12 @@ export default function GiftCardSection() {
                     </h3>
                     <ul className="mt-3 space-y-2 font-sans text-[13px] leading-[1.6] text-text-primary sm:text-[14px]">
                       {restaurant.hours.map((row) => (
-                        <li key={row.days} className="flex flex-col gap-0.5">
-                          <span className="font-semibold">{row.days}</span>
-                          <span className="text-text-secondary">{row.time}</span>
+                        <li
+                          key={row.days}
+                          className="flex items-baseline justify-between gap-4"
+                        >
+                          <span className="shrink-0 font-semibold">{row.days}</span>
+                          <span className="text-right text-text-secondary">{row.time}</span>
                         </li>
                       ))}
                     </ul>

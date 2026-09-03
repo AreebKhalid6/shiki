@@ -1,29 +1,34 @@
 export const restaurant = {
   name: "Shiki",
   tagline: "Where art meets flavor in an unforgettable dining experience.",
-  addressLine1: "1100 First Colony Road",
-  addressLine2: "Sugar Land, TX 77479",
-  address: "1100 First Colony Road, Sugar Land, TX 77479",
-  phone: "(281) 313-9688",
-  phoneHref: "tel:+12813139688",
+  addressLine1: "4900 Dodge St",
+  addressLine2: "Omaha, NE 68132, United States",
+  address: "4900 Dodge St, Omaha, NE 68132, United States",
+  phone: "+1 402-504-4910",
+  phoneHref: "tel:+14025044910",
   email: "info@shikisugarland.com",
   emailHref: "mailto:info@shikisugarland.com",
-  mapsHref: "https://maps.google.com/?q=1100+First+Colony+Road+Sugar+Land+TX+77479",
+  mapsHref: "https://maps.google.com/?q=4900+Dodge+St+Omaha+NE+68132",
   hours: [
-    { days: "Mon – Thu", time: "11:30am – 10:00pm" },
-    { days: "Fri – Sat", time: "11:30am – 11:00pm" },
-    { days: "Sunday", time: "11:30am – 9:30pm" },
+    { days: "Monday", time: "11 AM – 9 PM" },
+    { days: "Tuesday", time: "11 AM – 9 PM" },
+    { days: "Wednesday", time: "11 AM – 9 PM" },
+    { days: "Thursday", time: "11 AM – 9 PM" },
+    { days: "Friday", time: "11 AM – 11 PM" },
+    { days: "Saturday", time: "12 PM – 11 PM" },
+    { days: "Sunday", time: "12 PM – 9 PM" },
   ],
+  menuUrl: "https://shiki.toast.site/menu/shiki-4900-dodge-street",
 };
 
 export const navLinks = [
-  { label: "About", href: "#about" },
-  { label: "Menu", href: "#menu" },
-  { label: "Spaces", href: "#spaces" },
-  { label: "Private Events", href: "#private-events" },
-  { label: "Gallery", href: "#gallery" },
-  { label: "Gifts", href: "#gifts" },
-  { label: "Contact", href: "#contact" },
+  { label: "About", href: "/about", linked: false },
+  { label: "Menu", href: "/menu", linked: false },
+  { label: "Spaces", href: "/#spaces", linked: true },
+  { label: "Private Events", href: "/#private-events", linked: true },
+  { label: "Gallery", href: "/#gallery", linked: true },
+  { label: "Gifts", href: "/#gifts", linked: true },
+  { label: "Contact", href: "/contact", linked: true },
 ] as const;
 
 export const experienceItems = [
@@ -38,8 +43,8 @@ export const experienceItems = [
     title: "Familiar Favorites",
     description:
       "Smash burgers, fried rice, chicken, pasta … come discover your favorite.",
-    image: "/images/homesectionimage.png",
-    alt: "Chicken pasta and familiar favorites at Shiki",
+    image: "/images/familiar-favorites.jpg",
+    alt: "Smash burger with fries at Shiki",
   },
   {
     title: "Cocktails",
