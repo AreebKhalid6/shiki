@@ -7,7 +7,7 @@ import ContactContent from "@/components/ContactContent";
 export const metadata: Metadata = {
   title: "Contact | Shiki",
   description:
-    "Visit Shiki in Sugar Land — address, hours, phone, and get in touch for reservations or private events.",
+    "Visit Shiki in Omaha — address, hours, phone, and get in touch for reservations or private events.",
 };
 
 export default function ContactPage() {

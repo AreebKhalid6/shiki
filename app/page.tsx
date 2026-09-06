@@ -1,9 +1,10 @@
 import Hero from "@/components/Hero";
 import ExperienceSection from "@/components/ExperienceSection";
 import SpacesSection from "@/components/SpacesSection";
-import SpecialsSection from "@/components/SpecialsSection";
+// import SpecialsSection from "@/components/SpecialsSection";
 import GallerySection from "@/components/GallerySection";
 import ChefSection from "@/components/ChefSection";
+import ReservationSection from "@/components/ReservationSection";
 import GiftCardSection from "@/components/GiftCardSection";
 import Footer from "@/components/Footer";
 
@@ -13,9 +14,10 @@ export default function Home() {
       <Hero />
       <ExperienceSection />
       <SpacesSection />
-      <SpecialsSection />
+      {/* <SpecialsSection /> */}
       <GallerySection />
       <ChefSection />
+      <ReservationSection />
       <GiftCardSection />
       <Footer />
     </main>

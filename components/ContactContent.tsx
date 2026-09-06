@@ -3,7 +3,7 @@
 import { FormEvent, useState } from "react";
 import { Clock, Mail, MapPin, Navigation, Phone } from "lucide-react";
 import Reveal from "@/components/Reveal";
-import { restaurant } from "@/data/content";
+import { reservations, restaurant } from "@/data/content";
 
 export default function ContactContent() {
   const [sent, setSent] = useState(false);
@@ -97,7 +97,7 @@ export default function ContactContent() {
                       key={row.days}
                       className="flex flex-col gap-0.5 sm:flex-row sm:gap-x-4"
                     >
-                      <span className="min-w-[6rem] font-semibold">{row.days}</span>
+                      <span className="min-w-[6.5rem] font-semibold">{row.days}</span>
                       <span className="text-text-secondary">{row.time}</span>
                     </li>
                   ))}
@@ -105,7 +105,9 @@ export default function ContactContent() {
               </div>
 
               <a
-                href="#reserve"
+                href={reservations.url}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn-soft inline-flex items-center justify-center bg-pink-primary px-7 py-3.5 font-sans text-[12px] font-semibold uppercase tracking-[0.12em] text-white hover:bg-rose-deep"
               >
                 Reserve Your Table

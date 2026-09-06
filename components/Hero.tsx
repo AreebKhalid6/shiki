@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import Header from "@/components/Header";
@@ -28,7 +27,7 @@ export default function Hero() {
   }, [reduceMotion]);
 
   return (
-    <section className="relative min-h-[100svh] overflow-hidden lg:min-h-[720px] xl:min-h-[780px]">
+    <section className="relative min-h-[560px] overflow-hidden sm:min-h-[640px] lg:min-h-[720px] xl:min-h-[780px]">
       <MediaImage
         src="/images/newhbg.png"
         alt="Shiki dining room with cherry blossom canopy"
@@ -68,7 +67,7 @@ export default function Hero() {
 
       <Header />
 
-      <div className="relative z-10 mx-auto flex min-h-[100svh] max-w-[1380px] items-end px-4 pb-12 pt-24 sm:items-center sm:px-10 sm:pb-16 sm:pt-28 lg:min-h-[720px] lg:px-12 lg:pb-20 lg:pt-24 xl:min-h-[780px] xl:pl-14">
+      <div className="relative z-10 mx-auto flex min-h-[560px] max-w-[1380px] items-center px-4 pb-12 pt-14 sm:min-h-[640px] sm:px-10 sm:pb-16 sm:pt-20 lg:min-h-[720px] lg:px-12 lg:pb-20 lg:pt-24 xl:min-h-[780px] xl:pl-14">
         <motion.div
           className="w-full max-w-[640px] text-left text-white"
           initial={reduceMotion ? false : "hidden"}
@@ -81,7 +80,7 @@ export default function Hero() {
           }}
         >
           <motion.p
-            className="font-sans text-[11px] font-medium tracking-[0.04em] text-gold sm:text-[14px] sm:tracking-[0.06em]"
+            className="font-sans text-[10px] font-medium tracking-[0.04em] text-gold sm:text-[14px] sm:tracking-[0.06em]"
             variants={{
               hidden: { opacity: 0, y: 18 },
               show: {
@@ -91,11 +90,11 @@ export default function Hero() {
               },
             }}
           >
-           Time Slows Down Beneath the Blossoms
+            Time Slows Down Beneath the Blossoms
           </motion.p>
 
           <motion.h1
-            className="mt-3 font-serif text-[36px] font-medium leading-[1.08] tracking-tight sm:mt-5 sm:text-[56px] sm:leading-[1.02] lg:text-[68px] xl:text-[70px]"
+            className="mt-2 font-serif text-[32px] font-medium leading-[1.1] tracking-tight sm:mt-5 sm:text-[62px] sm:leading-[1.02] lg:text-[74px] xl:text-[67px] xl:leading-[1.07]"
             variants={{
               hidden: { opacity: 0, y: 24 },
               show: {
@@ -105,13 +104,13 @@ export default function Hero() {
               },
             }}
           >
-            Four Seasons of Flavor.  
+            Four Seasons of Flavor.
             <br />
             Something for Everyone.
           </motion.h1>
 
           <motion.p
-            className="mt-4 max-w-[500px] font-sans text-[13px] leading-[1.7] text-white/90 sm:mt-6 sm:text-[15px] sm:leading-[1.75]"
+            className="mt-3 max-w-[500px] font-sans text-[13px] leading-[1.65] text-white/90 sm:mt-6 sm:text-[15px] sm:leading-[1.75]"
             variants={{
               hidden: { opacity: 0, y: 18 },
               show: {
@@ -124,33 +123,44 @@ export default function Hero() {
             Artfully crafted sushi, Asian-inspired dishes, familiar favorites,
             and inventive cocktails — experience Shiki in historic Dundee.
           </motion.p>
-
-          <motion.div
-            className="mt-7 flex w-full flex-col gap-3 sm:mt-9 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:gap-4"
-            variants={{
-              hidden: { opacity: 0, y: 16 },
-              show: {
-                opacity: 1,
-                y: 0,
-                transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
-              },
-            }}
-          >
-            <Link
-              href="#reserve"
-              className="btn-soft inline-flex w-full items-center justify-center bg-pink-primary px-6 py-3.5 font-sans text-[12px] font-semibold uppercase tracking-[0.1em] text-white hover:bg-rose-deep sm:w-auto"
-            >
-              Reserve Table
-            </Link>
-            <Link
-              href="/menu"
-              className="btn-ghost-soft inline-flex w-full items-center justify-center border border-white px-6 py-3.5 font-sans text-[12px] font-semibold uppercase tracking-[0.1em] text-white hover:bg-white/10 sm:w-auto"
-            >
-              View Menu
-            </Link>
-          </motion.div>
         </motion.div>
       </div>
+
+      <a
+        href="#about"
+        className="absolute bottom-5 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-2 text-white/80 transition-colors hover:text-white sm:bottom-7"
+        aria-label="Scroll to next section"
+      >
+        <span className="font-sans text-[10px] font-medium uppercase tracking-[0.28em] sm:text-[11px]">
+          Scroll
+        </span>
+        <motion.span
+          aria-hidden
+          className="flex flex-col items-center"
+          animate={reduceMotion ? undefined : { y: [0, 6, 0] }}
+          transition={
+            reduceMotion
+              ? undefined
+              : { duration: 1.4, repeat: Infinity, ease: "easeInOut" }
+          }
+        >
+          <svg
+            width="18"
+            height="18"
+            viewBox="0 0 24 24"
+            fill="none"
+            className="text-gold"
+          >
+            <path
+              d="M6 9l6 6 6-6"
+              stroke="currentColor"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+        </motion.span>
+      </a>
     </section>
   );
 }

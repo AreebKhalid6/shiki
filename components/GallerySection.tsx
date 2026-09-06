@@ -1,6 +1,5 @@
 "use client";
 
-import Link from "next/link";
 import Reveal from "@/components/Reveal";
 import MediaImage from "@/components/MediaImage";
 import { galleryItems } from "@/data/content";
@@ -11,7 +10,7 @@ export default function GallerySection() {
   return (
     <section
       id="gallery"
-      className="overflow-hidden bg-bg-main px-4 py-14 sm:px-8 sm:py-24 lg:px-10 lg:py-28"
+      className="overflow-hidden bg-bg-main px-4 pb-14 pt-20 sm:px-8 sm:pb-24 lg:px-10 lg:pb-28"
     >
       <div className="mx-auto max-w-[1280px] xl:max-w-[1380px]">
         <Reveal className="mx-auto max-w-2xl text-center">
@@ -19,7 +18,7 @@ export default function GallerySection() {
             Shiki Moments
           </p>
           <h2 className="mt-3 font-serif text-[32px] font-medium leading-[1.08] text-text-primary sm:text-5xl lg:text-[54px]">
-          Photo Gallery 
+            Photo Gallery
           </h2>
         </Reveal>
       </div>
@@ -48,15 +47,6 @@ export default function GallerySection() {
           </div>
         </div>
       </div>
-
-      <Reveal className="mt-8 text-center sm:mt-12">
-        <Link
-          href="#gallery"
-          className="btn-ghost-soft inline-flex border border-text-primary/25 bg-bg-card px-6 py-3.5 font-sans text-[12px] font-semibold uppercase tracking-[0.1em] text-text-primary hover:border-pink-primary hover:text-pink-primary"
-        >
-          Explore Gallery
-        </Link>
-      </Reveal>
     </section>
   );
 }

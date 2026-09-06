@@ -1,9 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { Clock, MapPin, Navigation } from "lucide-react";
 import Reveal from "@/components/Reveal";
+import GiftCardButtons from "@/components/giftcards/GiftCardButtons";
 import { restaurant } from "@/data/content";
 
 export default function GiftCardSection() {
@@ -20,7 +20,7 @@ export default function GiftCardSection() {
         />
         <div className="absolute inset-0 bg-gradient-to-r from-[#fff9f5]/96 via-[#fff9f5]/82 to-[#fff9f5]/40 sm:from-[#fff9f5]/88 sm:via-[#fff9f5]/50 sm:to-transparent" />
 
-        <div className="relative z-10 mx-auto grid max-w-[1280px] items-center gap-8 px-4 py-10 sm:px-8 sm:py-12 lg:grid-cols-2 lg:gap-10 lg:px-10 lg:py-14 xl:max-w-[1380px]">
+        <div className="relative z-10 mx-auto grid max-w-[1280px] items-center gap-8 px-4 py-8 sm:px-8 sm:py-10 lg:grid-cols-2 lg:gap-10 lg:px-10 lg:py-10 xl:max-w-[1380px]">
           <div>
             <Reveal className="max-w-md">
               <p className="font-sans text-[11px] font-medium uppercase tracking-[0.18em] text-pink-primary sm:text-[12px]">
@@ -32,27 +32,25 @@ export default function GiftCardSection() {
               <p className="mt-3 max-w-md font-sans text-[13px] leading-[1.7] text-text-secondary sm:text-[15px]">
                 Share an unforgettable experience with those who matter most.
               </p>
-              <Link
-                href="#gifts"
-                className="btn-soft mt-6 inline-flex w-full items-center justify-center bg-pink-primary px-6 py-3 font-sans text-[12px] font-semibold uppercase tracking-[0.1em] text-white hover:bg-rose-deep sm:w-auto"
-              >
-                Purchase Gift Cards
-              </Link>
+              <GiftCardButtons size="compact" className="mt-4" />
             </Reveal>
 
-            <Reveal delay={0.08} className="mt-6">
-              <div className="card-soft rounded-[14px] border border-[#f0d7d4] bg-[#fffdfb]/94 p-5 sm:p-6">
-                <div className="grid gap-6 sm:grid-cols-2">
+            <Reveal delay={0.08} className="mt-5">
+              <div className="card-soft rounded-[14px] border border-[#f0d7d4] bg-[#fffdfb]/94 p-4 sm:p-5">
+                <div className="grid gap-6 sm:grid-cols-2 sm:gap-x-12 sm:gap-y-6">
                   <div>
                     <h3 className="flex items-center gap-2 font-sans text-[12px] font-bold uppercase tracking-[0.16em] text-gold">
                       <Clock size={14} aria-hidden />
                       Hours
                     </h3>
-                    <ul className="mt-3 space-y-2 font-sans text-[13px] leading-[1.6] text-text-primary sm:text-[14px]">
+                    <ul className="mt-2.5 space-y-1 font-sans text-[13px] leading-[1.6] text-text-primary sm:text-[14px]">
                       {restaurant.hours.map((row) => (
-                        <li key={row.days} className="flex flex-col gap-0.5">
-                          <span className="font-semibold">{row.days}</span>
-                          <span className="text-text-secondary">{row.time}</span>
+                        <li
+                          key={row.days}
+                          className="flex items-baseline justify-between gap-4"
+                        >
+                          <span className="shrink-0 font-semibold">{row.days}</span>
+                          <span className="text-right text-text-secondary">{row.time}</span>
                         </li>
                       ))}
                     </ul>
@@ -81,21 +79,21 @@ export default function GiftCardSection() {
                       <Navigation size={14} aria-hidden />
                       Location
                     </h3>
-                    <a
-                      href={restaurant.mapsHref}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-ghost-soft mt-3 inline-flex items-center justify-center border border-text-primary px-4 py-2.5 font-sans text-[11px] font-semibold uppercase tracking-[0.1em] text-text-primary hover:bg-text-primary hover:text-white"
-                    >
-                      Get Directions
-                    </a>
+                    <p className="mt-3 font-sans text-[13px] leading-[1.7] text-text-secondary sm:text-[14px]">
+                      <a
+                        href={restaurant.mapsHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="transition-colors hover:text-pink-primary"
+                      >
+                        View on Google Maps
+                      </a>
+                    </p>
                   </div>
                 </div>
               </div>
             </Reveal>
           </div>
-
-       
         </div>
       </div>
     </section>

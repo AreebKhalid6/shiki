@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import Reveal from "@/components/Reveal";
 import { happyHourSpecials, lunchSpecials } from "@/data/content";
 
@@ -94,13 +93,6 @@ export default function SpecialsSection() {
                   </li>
                 ))}
               </ul>
-
-              <Link
-                href="/menu"
-                className="btn-soft mt-6 inline-flex w-full items-center justify-center bg-pink-primary px-5 py-3 font-sans text-[11px] font-semibold uppercase tracking-[0.1em] text-white hover:bg-rose-deep sm:mt-8 sm:w-auto sm:text-[12px]"
-              >
-                View Lunch Menu
-              </Link>
             </div>
 
             <div className="relative mx-auto mt-6 aspect-square w-[70%] max-w-[220px] md:absolute md:right-2 md:top-1/2 md:mt-0 md:h-[78%] md:w-[46%] md:max-w-none md:-translate-y-1/2">
@@ -144,13 +136,6 @@ export default function SpecialsSection() {
                   </li>
                 ))}
               </ul>
-
-              <Link
-                href="/menu"
-                className="btn-soft mt-6 inline-flex w-full items-center justify-center bg-pink-primary px-5 py-3 font-sans text-[11px] font-semibold uppercase tracking-[0.1em] text-white hover:bg-rose-deep sm:mt-8 sm:w-auto sm:text-[12px]"
-              >
-                View Happy Hour Menu
-              </Link>
             </div>
 
             <div className="relative mx-auto mt-4 h-48 w-[55%] max-w-[180px] md:absolute md:right-3 md:bottom-0 md:top-4 md:mt-0 md:h-auto md:w-[44%] md:max-w-none">

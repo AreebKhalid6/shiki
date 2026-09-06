@@ -1,46 +1,90 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import { ExternalLink } from "lucide-react";
-import Reveal from "@/components/Reveal";
-import { menuCategories } from "@/data/menu";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Search } from "lucide-react";
+import MenuCategoryNavigation from "@/components/menu/MenuCategoryNavigation";
+import MenuCategorySection from "@/components/menu/MenuCategorySection";
+import MenuLoadingSkeleton from "@/components/menu/MenuLoadingSkeleton";
+import MenuErrorState from "@/components/menu/MenuErrorState";
+import OrderOnlineButton from "@/components/menu/OrderOnlineButton";
+import type { PublicMenuCategory, PublicMenuResponse } from "@/lib/toast/types";
 import { restaurant } from "@/data/content";
 
-function MenuItemRow({ item }: { item: (typeof menuCategories)[number]["items"][number] }) {
-  return (
-    <article className="border-b border-border-light/80 py-5 last:border-b-0 sm:py-6">
-      <div className="flex items-start justify-between gap-4">
-        <div className="min-w-0 flex-1">
-          <div className="flex flex-wrap items-center gap-2">
-            <h3 className="font-serif text-[20px] font-medium leading-tight text-text-primary sm:text-[22px]">
-              {item.name}
-            </h3>
-            {item.tag ? (
-              <span className="rounded-full bg-pink-pale px-2.5 py-0.5 font-sans text-[10px] font-semibold uppercase tracking-[0.12em] text-rose-deep">
-                {item.tag}
-              </span>
-            ) : null}
-          </div>
-          {item.description ? (
-            <p className="mt-1.5 font-sans text-[13px] leading-relaxed text-text-secondary sm:text-[14px]">
-              {item.description}
-            </p>
-          ) : null}
-        </div>
-        <p className="shrink-0 font-sans text-[15px] font-semibold text-gold sm:text-[16px]">
-          {item.price}
-        </p>
-      </div>
-    </article>
-  );
+function menuNameOf(category: PublicMenuCategory) {
+  return category.menuName || category.subtitle || "Menu";
 }
 
 export default function MenuContent() {
-  const [activeId, setActiveId] = useState(menuCategories[0]?.id ?? "");
+  const [menu, setMenu] = useState<PublicMenuResponse | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [activeMenu, setActiveMenu] = useState<string | null>(null);
+  const [activeCategoryId, setActiveCategoryId] = useState("");
+  const [query, setQuery] = useState("");
+  const navRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+
+  const loadMenu = useCallback(async () => {
+    setLoading(true);
+    setError(null);
+
+    try {
+      const response = await fetch("/api/menu", { cache: "no-store" });
+      const data = (await response.json()) as PublicMenuResponse & {
+        error?: string;
+      };
+
+      if (!response.ok) {
+        throw new Error(data.error || "Unable to load the menu right now.");
+      }
+
+      setMenu(data);
+      setActiveMenu(data.categories[0] ? menuNameOf(data.categories[0]) : null);
+    } catch (err) {
+      setMenu(null);
+      setError(
+        err instanceof Error ? err.message : "Unable to load the menu right now.",
+      );
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   useEffect(() => {
-    const sections = menuCategories
+    void loadMenu();
+  }, [loadMenu]);
+
+  const menuNames = useMemo(() => {
+    if (!menu) return [];
+    return [...new Set(menu.categories.map(menuNameOf))];
+  }, [menu]);
+
+  const trimmedQuery = query.trim().toLowerCase();
+  const isSearching = trimmedQuery.length > 0;
+
+  const visibleCategories = useMemo(() => {
+    if (!menu) return [] as PublicMenuCategory[];
+
+    if (!isSearching) {
+      return menu.categories.filter((c) => menuNameOf(c) === activeMenu);
+    }
+
+    return menu.categories
+      .map((category) => ({
+        ...category,
+        items: category.items.filter(
+          (item) =>
+            item.name.toLowerCase().includes(trimmedQuery) ||
+            item.description?.toLowerCase().includes(trimmedQuery),
+        ),
+      }))
+      .filter((category) => category.items.length > 0);
+  }, [menu, activeMenu, isSearching, trimmedQuery]);
+
+  useEffect(() => {
+    setActiveCategoryId(visibleCategories[0]?.id ?? "");
+
+    const sections = visibleCategories
       .map((category) => document.getElementById(category.id))
       .filter(Boolean) as HTMLElement[];
 
@@ -50,103 +94,137 @@ export default function MenuContent() {
       (entries) => {
         const visible = entries
           .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
 
         if (visible[0]?.target.id) {
-          setActiveId(visible[0].target.id);
+          setActiveCategoryId(visible[0].target.id);
         }
       },
-      {
-        rootMargin: "-28% 0px -55% 0px",
-        threshold: [0.1, 0.25, 0.5],
-      },
+      { rootMargin: "-35% 0px -55% 0px" },
     );
 
     sections.forEach((section) => observer.observe(section));
     return () => observer.disconnect();
-  }, []);
+  }, [visibleCategories]);
+
+  const navOffset = () => (navRef.current?.getBoundingClientRect().bottom ?? 160) + 16;
 
   const scrollToCategory = (id: string) => {
     const section = document.getElementById(id);
     if (!section) return;
 
-    const offset = 120;
-    const top = section.getBoundingClientRect().top + window.scrollY - offset;
+    const top = section.getBoundingClientRect().top + window.scrollY - navOffset();
     window.scrollTo({ top, behavior: "smooth" });
-    setActiveId(id);
+    setActiveCategoryId(id);
   };
+
+  const selectMenu = (name: string) => {
+    setQuery("");
+    setActiveMenu(name);
+
+    const content = contentRef.current;
+    if (!content) return;
+    const top = content.getBoundingClientRect().top + window.scrollY - navOffset();
+    if (window.scrollY > top) {
+      window.scrollTo({ top, behavior: "smooth" });
+    }
+  };
+
+  const orderingUrl = menu?.orderingUrl || restaurant.menuUrl;
 
   return (
     <section className="bg-bg-main px-4 pb-16 pt-10 sm:px-8 sm:pb-20 sm:pt-12 lg:px-10">
       <div className="mx-auto max-w-[1300px]">
-        <div className="sticky top-[76px] z-20 -mx-4 border-y border-border-light bg-bg-main/95 px-4 py-3 backdrop-blur-sm sm:top-[84px] sm:-mx-8 sm:px-8 lg:top-[84px] lg:-mx-10 lg:px-10">
-          <div className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-            {menuCategories.map((category) => {
-              const isActive = activeId === category.id;
+        <div className="flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
+          <div>
+            <p className="font-sans text-[11px] font-semibold uppercase tracking-[0.22em] text-gold">
+              Shiki
+            </p>
+            <h2 className="mt-2 font-serif text-3xl font-medium text-text-primary sm:text-4xl">
+              Our Menu
+            </h2>
+            <p className="mt-2 max-w-xl font-sans text-[14px] leading-relaxed text-text-secondary">
+              Browse our full menu. Ready to order? Place your order online
+              through Toast.
+            </p>
+          </div>
+          <OrderOnlineButton href={orderingUrl} />
+        </div>
 
-              return (
-                <button
+        <div className="relative mt-8">
+          <Search
+            size={16}
+            className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-text-secondary"
+            aria-hidden
+          />
+          <input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Search the whole menu…"
+            className="w-full rounded-[10px] border border-border-light bg-bg-card py-3 pl-10 pr-4 font-sans text-[14px] text-text-primary outline-none transition focus:border-pink-primary"
+            aria-label="Search menu items"
+          />
+        </div>
+
+        {loading ? <MenuLoadingSkeleton /> : null}
+
+        {!loading && error ? (
+          <MenuErrorState message={error} onRetry={() => void loadMenu()} />
+        ) : null}
+
+        {!loading && !error && menu && menu.categories.length === 0 ? (
+          <MenuErrorState message="No public menu items are available right now. Please check back soon." />
+        ) : null}
+
+        {!loading && !error && menu && menu.categories.length > 0 ? (
+          <>
+            <div className="mt-8">
+              <MenuCategoryNavigation
+                ref={navRef}
+                menus={isSearching ? [] : menuNames}
+                activeMenu={activeMenu}
+                onSelectMenu={selectMenu}
+                categories={visibleCategories}
+                activeCategoryId={activeCategoryId}
+                onSelectCategory={scrollToCategory}
+              />
+            </div>
+
+            <div ref={contentRef} className="mt-8 space-y-12 sm:mt-10 sm:space-y-14">
+              {isSearching ? (
+                <p className="font-sans text-[13px] text-text-secondary">
+                  {visibleCategories.reduce((n, c) => n + c.items.length, 0)} results for
+                  &ldquo;{query.trim()}&rdquo;
+                </p>
+              ) : null}
+
+              {isSearching && visibleCategories.length === 0 ? (
+                <MenuErrorState message="No menu items match your search." />
+              ) : null}
+
+              {visibleCategories.map((category) => (
+                <MenuCategorySection
                   key={category.id}
-                  type="button"
-                  onClick={() => scrollToCategory(category.id)}
-                  className={`shrink-0 rounded-full border px-4 py-2 font-sans text-[11px] font-semibold uppercase tracking-[0.1em] transition-colors sm:text-[12px] ${
-                    isActive
-                      ? "border-pink-primary bg-pink-primary text-white"
-                      : "border-border-light bg-bg-card text-text-secondary hover:border-pink-light hover:text-text-primary"
-                  }`}
-                >
-                  {category.title}
-                </button>
-              );
-            })}
-          </div>
-        </div>
+                  category={category}
+                  showMenuName={isSearching}
+                />
+              ))}
+            </div>
 
-        <div className="mt-8 space-y-12 sm:mt-10 sm:space-y-14">
-          {menuCategories.map((category, index) => (
-            <Reveal key={category.id} delay={index * 0.03}>
-              <section id={category.id} className="scroll-mt-32">
-                <div className="mb-2">
-                  <h3 className="font-sans text-[13px] font-bold uppercase tracking-[0.16em] text-pink-primary sm:text-[14px]">
-                    {category.title}
-                  </h3>
-                  <span className="mt-2 block h-px w-14 bg-gold-soft" />
-                  {category.subtitle ? (
-                    <p className="mt-3 font-sans text-[12px] uppercase tracking-[0.12em] text-text-secondary/80">
-                      {category.subtitle}
-                    </p>
-                  ) : null}
-                </div>
-
-                <div className="mt-2 rounded-[14px] border border-border-light bg-bg-card px-5 sm:px-7">
-                  {category.items.map((item) => (
-                    <MenuItemRow key={item.name} item={item} />
-                  ))}
-                </div>
-              </section>
-            </Reveal>
-          ))}
-        </div>
-
-        <Reveal className="mt-14 text-center">
-          <div className="rounded-[14px] border border-border-light bg-bg-soft px-6 py-8 sm:px-10 sm:py-10">
-            <p className="font-serif text-2xl font-medium text-text-primary sm:text-3xl">
-              Ready to order?
-            </p>
-            <p className="mx-auto mt-3 max-w-md font-sans text-[14px] leading-relaxed text-text-secondary">
-              Place your order online through Toast for pickup or delivery.
-            </p>
-            <Link
-              href={restaurant.menuUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-soft mt-6 inline-flex items-center gap-2 bg-pink-primary px-8 py-3.5 font-sans text-[12px] font-semibold uppercase tracking-[0.12em] text-white hover:bg-rose-deep"
-            >
-              Order Online
-              <ExternalLink size={16} aria-hidden />
-            </Link>
-          </div>
-        </Reveal>
+            <div className="mt-14 rounded-[14px] border border-border-light bg-bg-soft px-6 py-8 text-center sm:px-10 sm:py-10">
+              <p className="font-serif text-2xl font-medium text-text-primary sm:text-3xl">
+                Ready to order?
+              </p>
+              <p className="mx-auto mt-3 max-w-md font-sans text-[14px] leading-relaxed text-text-secondary">
+                Orders are placed on Toast&apos;s official online ordering site.
+              </p>
+              <div className="mt-6">
+                <OrderOnlineButton href={orderingUrl} />
+              </div>
+            </div>
+          </>
+        ) : null}
       </div>
     </section>
   );
