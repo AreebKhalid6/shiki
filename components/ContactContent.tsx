@@ -97,7 +97,7 @@ export default function ContactContent() {
                       key={row.days}
                       className="flex flex-col gap-0.5 sm:flex-row sm:gap-x-4"
                     >
-                      <span className="min-w-[6rem] font-semibold">{row.days}</span>
+                      <span className="min-w-[6.5rem] font-semibold">{row.days}</span>
                       <span className="text-text-secondary">{row.time}</span>
                     </li>
                   ))}

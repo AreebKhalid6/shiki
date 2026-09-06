@@ -1,7 +1,6 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { Clock, MapPin, Navigation } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import { restaurant } from "@/data/content";
@@ -32,17 +31,11 @@ export default function GiftCardSection() {
               <p className="mt-3 max-w-md font-sans text-[13px] leading-[1.7] text-text-secondary sm:text-[15px]">
                 Share an unforgettable experience with those who matter most.
               </p>
-              <Link
-                href="#gifts"
-                className="btn-soft mt-6 inline-flex w-full items-center justify-center bg-pink-primary px-6 py-3 font-sans text-[12px] font-semibold uppercase tracking-[0.1em] text-white hover:bg-rose-deep sm:w-auto"
-              >
-                Purchase Gift Cards
-              </Link>
             </Reveal>
 
             <Reveal delay={0.08} className="mt-6">
               <div className="card-soft rounded-[14px] border border-[#f0d7d4] bg-[#fffdfb]/94 p-5 sm:p-6">
-                <div className="grid gap-6 sm:grid-cols-2">
+                <div className="grid gap-10 sm:grid-cols-2 sm:gap-x-14 sm:gap-y-10">
                   <div>
                     <h3 className="flex items-center gap-2 font-sans text-[12px] font-bold uppercase tracking-[0.16em] text-gold">
                       <Clock size={14} aria-hidden />
@@ -50,9 +43,12 @@ export default function GiftCardSection() {
                     </h3>
                     <ul className="mt-3 space-y-2 font-sans text-[13px] leading-[1.6] text-text-primary sm:text-[14px]">
                       {restaurant.hours.map((row) => (
-                        <li key={row.days} className="flex flex-col gap-0.5">
-                          <span className="font-semibold">{row.days}</span>
-                          <span className="text-text-secondary">{row.time}</span>
+                        <li
+                          key={row.days}
+                          className="flex items-baseline justify-between gap-4"
+                        >
+                          <span className="shrink-0 font-semibold">{row.days}</span>
+                          <span className="text-right text-text-secondary">{row.time}</span>
                         </li>
                       ))}
                     </ul>
@@ -81,21 +77,21 @@ export default function GiftCardSection() {
                       <Navigation size={14} aria-hidden />
                       Location
                     </h3>
-                    <a
-                      href={restaurant.mapsHref}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="btn-ghost-soft mt-3 inline-flex items-center justify-center border border-text-primary px-4 py-2.5 font-sans text-[11px] font-semibold uppercase tracking-[0.1em] text-text-primary hover:bg-text-primary hover:text-white"
-                    >
-                      Get Directions
-                    </a>
+                    <p className="mt-3 font-sans text-[13px] leading-[1.7] text-text-secondary sm:text-[14px]">
+                      <a
+                        href={restaurant.mapsHref}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="transition-colors hover:text-pink-primary"
+                      >
+                        View on Google Maps
+                      </a>
+                    </p>
                   </div>
                 </div>
               </div>
             </Reveal>
           </div>
-
-       
         </div>
       </div>
     </section>

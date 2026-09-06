@@ -1,12 +1,14 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import Reveal from "@/components/Reveal";
 
 export default function ChefSection() {
   return (
-    <section id="private-events" className="relative overflow-hidden bg-dark text-white">
+    <section
+      id="private-events"
+      className="relative overflow-hidden bg-black px-0 py-8 text-white sm:py-10 lg:py-12"
+    >
       <div className="lg:hidden">
         <div className="relative aspect-[16/10] w-full sm:aspect-[21/9]">
           <Image
@@ -62,13 +64,6 @@ function ChefCopy() {
       <p className="mt-4 font-accent text-3xl text-gold sm:mt-5 sm:text-4xl">
         Chef Tom
       </p>
-      <Link
-        href="/about"
-        className="mt-4 inline-flex items-center gap-2 border-b border-gold/70 pb-1 font-sans text-[11px] font-semibold uppercase tracking-[0.12em] text-gold transition-colors hover:border-gold hover:text-gold-soft sm:mt-5 sm:text-[12px]"
-      >
-        Learn More About Our Chef
-        <span aria-hidden>→</span>
-      </Link>
     </div>
   );
 }

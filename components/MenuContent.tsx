@@ -1,11 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
-import { ExternalLink } from "lucide-react";
 import Reveal from "@/components/Reveal";
 import { menuCategories } from "@/data/menu";
-import { restaurant } from "@/data/content";
 
 function MenuItemRow({ item }: { item: (typeof menuCategories)[number]["items"][number] }) {
   return (
@@ -127,26 +124,6 @@ export default function MenuContent() {
             </Reveal>
           ))}
         </div>
-
-        <Reveal className="mt-14 text-center">
-          <div className="rounded-[14px] border border-border-light bg-bg-soft px-6 py-8 sm:px-10 sm:py-10">
-            <p className="font-serif text-2xl font-medium text-text-primary sm:text-3xl">
-              Ready to order?
-            </p>
-            <p className="mx-auto mt-3 max-w-md font-sans text-[14px] leading-relaxed text-text-secondary">
-              Place your order online through Toast for pickup or delivery.
-            </p>
-            <Link
-              href={restaurant.menuUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-soft mt-6 inline-flex items-center gap-2 bg-pink-primary px-8 py-3.5 font-sans text-[12px] font-semibold uppercase tracking-[0.12em] text-white hover:bg-rose-deep"
-            >
-              Order Online
-              <ExternalLink size={16} aria-hidden />
-            </Link>
-          </div>
-        </Reveal>
       </div>
     </section>
   );

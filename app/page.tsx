@@ -1,7 +1,7 @@
 import Hero from "@/components/Hero";
 import ExperienceSection from "@/components/ExperienceSection";
 import SpacesSection from "@/components/SpacesSection";
-import SpecialsSection from "@/components/SpecialsSection";
+// import SpecialsSection from "@/components/SpecialsSection";
 import GallerySection from "@/components/GallerySection";
 import ChefSection from "@/components/ChefSection";
 import GiftCardSection from "@/components/GiftCardSection";
@@ -13,7 +13,7 @@ export default function Home() {
       <Hero />
       <ExperienceSection />
       <SpacesSection />
-      <SpecialsSection />
+      {/* <SpecialsSection /> */}
       <GallerySection />
       <ChefSection />
       <GiftCardSection />
