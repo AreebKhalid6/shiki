@@ -11,6 +11,8 @@ type HeaderProps = {
   className?: string;
 };
 
+const visibleLinks = navLinks.filter((item) => item.linked);
+
 export default function Header({ theme = "dark", className = "" }: HeaderProps) {
   const isLight = theme === "light";
   const [open, setOpen] = useState(false);
@@ -42,52 +44,51 @@ export default function Header({ theme = "dark", className = "" }: HeaderProps) 
           />
         </Link>
 
-        <nav
-          aria-label="Main navigation"
-          className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-6 xl:gap-8 min-[900px]:flex"
-        >
-          {navLinks.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`group relative whitespace-nowrap font-sans text-[10px] font-medium uppercase tracking-[0.22em] transition-opacity hover:opacity-100 xl:text-[11px] ${
-                isLight ? "text-text-primary/90" : "text-white/95"
-              }`}
-            >
-              {item.label}
-              <span
-                className={`absolute -bottom-1 left-0 h-px w-0 transition-all duration-300 group-hover:w-full ${
-                  isLight ? "bg-pink-primary" : "bg-white"
+        {visibleLinks.length > 0 ? (
+          <nav
+            aria-label="Main navigation"
+            className="absolute left-1/2 top-1/2 hidden -translate-x-1/2 -translate-y-1/2 items-center gap-6 xl:gap-8 min-[900px]:flex"
+          >
+            {visibleLinks.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`group relative whitespace-nowrap font-sans text-[10px] font-medium uppercase tracking-[0.22em] transition-opacity hover:opacity-100 xl:text-[11px] ${
+                  isLight ? "text-text-primary/90" : "text-white/95"
                 }`}
-              />
-            </Link>
-          ))}
-        </nav>
+              >
+                {item.label}
+                <span
+                  className={`absolute -bottom-1 left-0 h-px w-0 transition-all duration-300 group-hover:w-full ${
+                    isLight ? "bg-pink-primary" : "bg-white"
+                  }`}
+                />
+              </Link>
+            ))}
+          </nav>
+        ) : null}
 
-        <div className="relative z-40 flex items-center gap-2 sm:gap-3">
-          <Link
-            href="#reserve"
-            className="btn-soft hidden bg-pink-primary px-5 py-2.5 font-sans text-[10px] font-semibold uppercase tracking-[0.14em] text-white hover:bg-rose-deep sm:inline-flex lg:text-[11px]"
-          >
-            Reserve Table
-          </Link>
-
-          <button
-            type="button"
-            className={`inline-flex size-10 items-center justify-center min-[900px]:hidden ${
-              isLight ? "text-text-primary" : "text-white"
-            }`}
-            aria-expanded={open}
-            aria-controls="mobile-nav"
-            aria-label={open ? "Close menu" : "Open menu"}
-            onClick={() => setOpen((v) => !v)}
-          >
-            {open ? <X size={22} /> : <Menu size={22} />}
-          </button>
-        </div>
+        {visibleLinks.length > 0 ? (
+          <div className="relative z-40 flex items-center gap-2 sm:gap-3">
+            <button
+              type="button"
+              className={`inline-flex size-10 items-center justify-center min-[900px]:hidden ${
+                isLight ? "text-text-primary" : "text-white"
+              }`}
+              aria-expanded={open}
+              aria-controls="mobile-nav"
+              aria-label={open ? "Close menu" : "Open menu"}
+              onClick={() => setOpen((v) => !v)}
+            >
+              {open ? <X size={22} /> : <Menu size={22} />}
+            </button>
+          </div>
+        ) : (
+          <div className="size-10" aria-hidden />
+        )}
       </div>
 
-      {open ? (
+      {open && visibleLinks.length > 0 ? (
         <div
           id="mobile-nav"
           className="fixed inset-0 z-30 overflow-y-auto bg-dark/98 pt-16 backdrop-blur-md min-[900px]:hidden"
@@ -96,7 +97,7 @@ export default function Header({ theme = "dark", className = "" }: HeaderProps) 
             aria-label="Mobile navigation"
             className="mx-auto flex max-w-[1380px] flex-col gap-1 px-5 py-6 sm:px-8"
           >
-            {navLinks.map((item) => (
+            {visibleLinks.map((item) => (
               <Link
                 key={item.href}
                 href={item.href}
@@ -106,13 +107,6 @@ export default function Header({ theme = "dark", className = "" }: HeaderProps) 
                 {item.label}
               </Link>
             ))}
-            <Link
-              href="#reserve"
-              onClick={() => setOpen(false)}
-              className="btn-soft mt-6 inline-flex w-full items-center justify-center bg-pink-primary px-5 py-3.5 font-sans text-[12px] font-semibold uppercase tracking-[0.12em] text-white"
-            >
-              Reserve Table
-            </Link>
           </nav>
         </div>
       ) : null}

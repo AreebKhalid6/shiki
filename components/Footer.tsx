@@ -1,4 +1,3 @@
-import Link from "next/link";
 import Image from "next/image";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { restaurant } from "@/data/content";
@@ -28,7 +27,7 @@ export default function Footer() {
   return (
     <footer id="contact" className="bg-[#fcf8f5]">
       <div className="mx-auto max-w-[1280px] px-5 py-14 sm:px-8 lg:px-10 lg:py-16 xl:max-w-[1380px]">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4 lg:gap-0">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-3 lg:gap-0">
           {/* Brand */}
           <div className="lg:pr-8">
             <Image
@@ -43,7 +42,9 @@ export default function Footer() {
             </p>
             <div className="mt-5 flex items-center gap-4 text-gold sm:mt-6">
               <a
-                href="#"
+                href="https://www.instagram.com/shikiomaha/?hl=en"
+                target="_blank"
+                rel="noopener noreferrer"
                 aria-label="Instagram"
                 className="transition-colors hover:text-pink-primary"
               >
@@ -104,7 +105,7 @@ export default function Footer() {
           </div>
 
           {/* Hours */}
-          <div className="border-t border-[#e8d9d4] pt-8 sm:border-t-0 sm:pt-0 lg:border-l lg:border-[#e8d9d4] lg:px-8">
+          <div className="border-t border-[#e8d9d4] pt-8 sm:border-t-0 sm:col-span-2 sm:pt-0 lg:col-span-1 lg:border-l lg:border-[#e8d9d4] lg:pl-8">
             <h3 className="font-sans text-[12px] font-bold uppercase tracking-[0.16em] text-gold">
               Hours
             </h3>
@@ -114,45 +115,18 @@ export default function Footer() {
                   key={row.days}
                   className="flex flex-col gap-0.5 sm:flex-row sm:flex-wrap sm:gap-x-3 sm:gap-y-1"
                 >
-                  <span className="min-w-[5.5rem] font-semibold">{row.days}</span>
+                  <span className="min-w-[6.5rem] font-semibold">{row.days}</span>
                   <span>{row.time}</span>
                 </li>
               ))}
             </ul>
           </div>
-
-          {/* Reservations */}
-          <div
-            id="reserve"
-            className="border-t border-[#e8d9d4] pt-8 sm:border-t-0 sm:pt-0 lg:border-l lg:border-[#e8d9d4] lg:pl-8"
-          >
-            <h3 className="font-sans text-[12px] font-bold uppercase tracking-[0.16em] text-gold">
-              Reservations
-            </h3>
-            <p className="mt-5 font-sans text-[14px] leading-[1.7] text-text-secondary">
-              We can&apos;t wait to welcome you.
-            </p>
-            <Link
-              href="#reserve"
-              className="btn-soft mt-6 inline-flex w-full items-center justify-center bg-pink-primary px-5 py-3.5 font-sans text-[12px] font-semibold uppercase tracking-[0.1em] text-white hover:bg-rose-deep sm:w-auto"
-            >
-              Reserve Your Table
-            </Link>
-          </div>
         </div>
       </div>
 
       <div className="border-t border-[#e8d9d4]">
-        <div className="mx-auto flex max-w-[1380px] flex-col items-center justify-between gap-3 px-5 py-5 text-center font-sans text-[12px] text-text-secondary/80 sm:flex-row sm:text-left sm:px-8 lg:px-10">
-          <p>© 2025 Shiki. All Rights Reserved.</p>
-          <div className="flex items-center gap-6">
-            <Link href="#" className="transition-colors hover:text-text-primary">
-              Privacy Policy
-            </Link>
-            <Link href="#" className="transition-colors hover:text-text-primary">
-              Terms of Service
-            </Link>
-          </div>
+        <div className="mx-auto max-w-[1380px] px-5 py-5 text-center font-sans text-[12px] text-text-secondary/80 sm:px-8 lg:px-10">
+          <p>© 2026 Shiki. All Rights Reserved.</p>
         </div>
       </div>
     </footer>

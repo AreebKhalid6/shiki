@@ -48,7 +48,11 @@ export default function ExperienceSection() {
                       alt={item.alt}
                       fill
                       sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
-                      className="hover-fade-img object-cover"
+                      className={
+                        item.title === "Familiar Favorites"
+                          ? "hover-fade-img object-cover object-[42%_center]"
+                          : "hover-fade-img object-cover"
+                      }
                       placeholderLabel={item.title}
                     />
                   </div>

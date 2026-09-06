@@ -21,9 +21,9 @@ const allura = Allura({
 });
 
 export const metadata: Metadata = {
-  title: "Shiki | Modern Japanese Cuisine",
+  title: "Shiki-Omaha",
   description:
-    "Elevated Japanese cuisine in an immersive dining experience framed by art, light, and blossoms.",
+    "Moments worth savoring with options to please every palate. Artful sushi and Asian flavors meet chicken, pasta, burgers, and more. Escape and indulge in something special.",
   icons: {
     icon: "/images/cta.png",
     apple: "/images/cta.png",
